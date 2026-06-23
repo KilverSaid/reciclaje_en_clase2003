@@ -27,7 +27,7 @@ LABELS_ES = {
 
 @st.cache.resource
 def cargar_modelo():
-    for path in MODEL_PATHS:
+    for path in MODEL_PATH:
         if path.exists():
             return tk.keras.models.load_model(path, compile=False)
     st.error("No se enocntro el modelo. Coloque la carpeta modelo_reciclaje_mobilenet junto a app.py")
