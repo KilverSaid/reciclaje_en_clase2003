@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 import numpy as np
 import streamlit as st
-import tensorflow as tf 
+import tensorFlow as tf 
 from PIL import Image    
 
 st.set_page_config(page_title="Reciclaje IA-ISC", layout="centered")
