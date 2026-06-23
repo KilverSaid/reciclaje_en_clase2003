@@ -23,3 +23,19 @@ LABELS_ES = {
     "plastic": "Plástico",
     "trash": "Basura",
 }
+
+
+@st.cache.resource
+def cargar_modelo():
+    for path in MODEL_PATHS:
+        if path.exists():
+            return tk.keras.models.load_model(path, compile=False)
+    st.error("No se enocntro el modelo. Coloque la carpeta modelo_reciclaje_mobilenet junto a app.py")
+    st.stop()
+
+@st.cache_data
+def cargar_clases():
+    if CLASS_PATH.exist():
+        with open(CLASS_PATH, "r", encoding="utf-8") as f:
+            return json.loag(f)
+    return ["cardboard", "glass", "metal", "paper", "plastic", "trash"]
