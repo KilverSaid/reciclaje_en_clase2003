@@ -39,3 +39,22 @@ def cargar_clases():
         with open(CLASS_PATH, "r", encoding="utf-8") as f:
             return json.loag(f)
     return ["cardboard", "glass", "metal", "paper", "plastic", "trash"]
+
+def preparar_imagen(img):
+    img = img.convert("RGB").resize(IMG_SIZE)
+    arr = np.array(img, dtype=np.float32)
+    arr = tf.keras.applications.mobilenet_v2.preprocess_input(arr)
+    return np.expand_dims(arr, axis=0)
+
+def predecir(img):
+    preds = modelo.predict(preparar_imagen(img), verbose=0)[0]
+    top3 = np.argsort(preds)[-3:][::-1]
+    return [
+        (LABELS_ES.get(clases[i], clases[i]), float(preds[i]) * 100)
+        for i in top3
+    ]
+
+modelo = cargar_modelo()
+clases = cargar_clases()
+
+archivo = st.file_uploader("Seleccione una imagen", type=["jpg", "jpeg", "png"])
